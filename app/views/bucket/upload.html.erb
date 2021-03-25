@@ -1,9 +1,0 @@
-<div style="display: flex; flex-direction: column; justify-content: center;height: 100vh;align-items: center;">
-  <%- result.each do |name, url| %>
-    <div>
-      <%= link_to "Download #{name}", url, target: :_blank %>
-    </div>
-  <% end %>
-
-  <%= link_to "Back", root_path %>
-</div>

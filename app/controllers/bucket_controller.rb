@@ -1,18 +1,18 @@
 class BucketController < ApplicationController
-  rescue_from UploadCommand::Failed, with: :upload_failed
-
   def upload
     bucket = Bucket.new(bucket_params.to_h)
-    render locals: { result: UploadCommand.new(bucket).execute }
+    UploadCommand.new(bucket).execute
+    redirect_to uploads_path
+  end
+
+  def clear
+    Upload.delete_all
+    redirect_to root_path
   end
 
   private
 
   def bucket_params
     params.require(:bucket).permit(files: [])
-  end
-
-  def upload_failed(exception)
-    byebug
   end
 end
