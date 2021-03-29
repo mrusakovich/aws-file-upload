@@ -21,7 +21,7 @@ class ProcessCommand < Struct.new(:payload, :broadcaster, :renderer)
   rescue StandardError => e
     upload.error = e.message
   ensure
-    File.unlink(file)
+    File.unlink(file) rescue nil # keep reading
     upload.save!
     broadcaster.broadcast(upload.name, renderer.render(upload))
   end
