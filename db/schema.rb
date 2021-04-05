@@ -12,10 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2021_03_25_114807) do
 
-  create_table "uploads", id: false, force: :cascade do |t|
+  create_table "uploads", force: :cascade do |t|
+    t.string "path"
     t.string "name"
     t.string "url"
-    t.string "error"
+    t.string "message"
   end
 
 end

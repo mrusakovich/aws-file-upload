@@ -4,10 +4,9 @@ class UploadJob < ApplicationJob
   queue_as :default
   sidekiq_options retry: false
 
-  def perform(file_path)
+  def perform(upload_id)
     payload = OpenStruct.new({
-      file_name: File.basename(file_path),
-      file_path: file_path,
+      upload_id: upload_id,
       bucket_name: ENV['AWS_BUCKET_NAME'],
       region: ENV['AWS_REGION']
     })

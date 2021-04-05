@@ -1,8 +1,7 @@
 class BucketController < ApplicationController
   def upload
-    bucket = Bucket.new(bucket_params.to_h)
-    UploadCommand.new(bucket).execute
-    redirect_to uploads_path
+    UploadCommand.new(file).execute
+    head :ok
   end
 
   def clear
@@ -12,7 +11,7 @@ class BucketController < ApplicationController
 
   private
 
-  def bucket_params
-    params.require(:bucket).permit(files: [])
+  def file
+    params.require(:file)
   end
 end

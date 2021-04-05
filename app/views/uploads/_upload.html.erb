@@ -8,10 +8,6 @@
     <% end %>
   </div>
   <div style="flex-basis: 33%">
-    <%- if upload.error %>
-      <%= upload.error %>
-    <% else %>
-      successful upload
-    <% end %>
+    <%= upload.message %>
   </div>
 </div>

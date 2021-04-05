@@ -5,8 +5,16 @@ consumer.subscriptions.create("UploadsChannel", {
     const { key, template } = payload;
     const row = document.querySelector(`[data-name='${key}']`);
     const wrapper = document.getElementById('uploads');
+    const nodeTemplate = document.createElement('template');
+    nodeTemplate.innerHTML = template;
+    const replacableNode = nodeTemplate.content.firstChild;
 
-    if (!wrapper || row) return;
-    wrapper.innerHTML = `${wrapper.innerHTML}${template}`
+    if (!wrapper) return;
+
+    if (row) {
+      row.replaceWith(replacableNode);
+    } else {
+      wrapper.appendChild(replacableNode);
+    }
   }
 });
