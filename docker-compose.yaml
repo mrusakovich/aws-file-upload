@@ -5,7 +5,7 @@ services:
     build: .
     command: "bundle exec rails db:create db:migrate"
     volumes:
-      - .:/code
+      - db:/code/db
   sidekiq:
     container_name: sidekiq
     build: .
@@ -13,7 +13,8 @@ services:
     environment:
       - REDIS_SERVICE=redis://redis:6379
     volumes:
-      - .:/code
+      - uploads:/code/tmp/uploads
+      - db:/code/db
     depends_on:
       - sqlite
       - redis
@@ -26,7 +27,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/code
+      - uploads:/code/tmp/uploads
+      - db:/code/db
     depends_on:
       - sqlite
       - redis
@@ -36,3 +38,6 @@ services:
     restart: always
     ports:
       - "6379:6379/tcp"
+volumes:
+  uploads:
+  db:
