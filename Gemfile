@@ -14,6 +14,7 @@ gem 'puma', '~> 5.0'
 # gem 'bcrypt', '~> 3.1.7'
 # state management
 gem 'state_machines'
+gem 'state_machines-activerecord'
 
 # Reduces boot times through cachinwsg; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

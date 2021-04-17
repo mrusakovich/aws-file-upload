@@ -1,14 +1,12 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
-  mount Sidekiq::Web => "/sidekiq"
+  root to: 'application#index'
+  get '*path', to: 'application#index'
 
-  root to: 'bucket#index'
-
-  resource :bucket, only: [:index], controller: :bucket do
-    put :upload
-    get :clear
+  namespace :api do
+    namespace :v1 do
+      resource :uploads, only: [:create, :index] do
+        delete :clear
+      end
+    end
   end
-
-  resources :uploads, only: [:index]
 end
