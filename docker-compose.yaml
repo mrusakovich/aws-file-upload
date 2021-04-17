@@ -21,17 +21,30 @@ services:
   web:
     container_name: web
     build: .
-    command: sh -c "bundle exec rails assets:precompile && bundle exec rails s -p 3000 -b 0.0.0.0"
+    command: bundle exec rails s -p 3000 -b 0.0.0.0
     environment:
       - REDIS_SERVICE=redis://redis:6379
+      - WEBPACKER_DEV_SERVER_HOST=assets
     ports:
       - 3000:3000
     volumes:
       - uploads:/code/tmp/uploads
       - db:/code/db
+      - .:/code
     depends_on:
       - sqlite
       - redis
+      - assets
+  assets:
+      container_name: assets
+      build: .
+      command: ./bin/webpack-dev-server
+      volumes:
+        - .:/code
+      environment:
+        - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+      ports:
+        - 3035:3035
   redis:
     container_name: redis
     image: redis:5

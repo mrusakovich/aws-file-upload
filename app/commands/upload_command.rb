@@ -2,6 +2,15 @@
 
 class UploadCommand < Struct.new(:file)
   def execute
+    
+  end
+
+  private
+
+  def direct_upload
+  end
+
+  def delayed_upload
     File.open(Rails.root.join('tmp', 'uploads', file.original_filename), 'w', binmode: true) do |out|
       file.to_io.each do |bytes|
         out.write(bytes)
