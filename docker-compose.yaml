@@ -20,6 +20,7 @@ services:
       - 3000:3000
     volumes:
       - .:/code
+      - node_modules:/code/node_modules
     depends_on:
       - assets
       - db_setup
@@ -29,7 +30,10 @@ services:
       command: ./bin/webpack-dev-server
       volumes:
         - .:/code
+        - node_modules:/code/node_modules
       environment:
         - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
       ports:
         - 3035:3035
+volumes:
+  node_modules:

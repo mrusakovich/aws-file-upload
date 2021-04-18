@@ -5,6 +5,7 @@ import { Column, Row } from "./shared/Grid";
 const style: React.CSSProperties = {
   height: '200px',
   marginTop: '20px',
+  overflowY: 'auto',
 };
 
 export const Flash: React.FC = () => {
