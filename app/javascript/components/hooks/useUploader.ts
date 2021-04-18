@@ -1,37 +1,40 @@
 import React from "react";
+import { Upload } from "../models/upload";
+import { Error } from "../models/error";
+import { create } from "../services/upload";
 
-type Return = {
-  processing: string;
-  upload: (files: Array<File>) => void;
+type PropsType = {
+  onFinish: () => void;
+  onUploadStart: (name: string) => void;
+  onUploadEnd: (upload: Upload) => void;
+  onUploadError: (error: Error) => void;
 };
 
-const apiUrl = "/api/v1/uploads";
-const csrfToken = sessionStorage.getItem('csrf-token');
+type Return = {
+  upload: (files: Array<File>) => void;
+  isUploading: boolean;
+};
 
-export const useUploader = (): Return => {
-  const [processing, setProcessing] = React.useState<string>();
+export const useUploader = ({ onFinish, onUploadStart, onUploadEnd, onUploadError }: PropsType): Return => {
+  const [isUploading, setUploading] = React.useState(false);
 
   const upload = React.useCallback(async (files: Array<File>) => {
     if (!files) return;
+    setUploading(true);
 
-    files.forEach(async (file, index) => {
-      setProcessing(file.name);
-      const data = new FormData();
-      data.append('authenticity_token', csrfToken);
-      data.append('file', file);
-
-      await fetch(apiUrl, {
-        credentials: 'include',
-        method: 'POST',
-        body: data
-      });
-
-      if (index === files.length - 1) setProcessing(undefined);
+    const uploads = files.map(async (file) => {
+      onUploadStart(file.name);
+      await create({ file, onSuccess: onUploadEnd, onError: onUploadError });
     });
-  }, []);
+
+    await Promise.all(uploads);
+    
+    setUploading(false);
+    onFinish();
+  }, [onUploadStart, onUploadEnd, onFinish]);
 
   return {
-    processing,
     upload,
+    isUploading,
   }
 };

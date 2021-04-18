@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es6", "dom"],
-    "module": "es6",
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "react-jsx",
   },
   "exclude": [
     "**/*.spec.ts",

@@ -1,2 +1,1 @@
-import "channels";
 import "components";

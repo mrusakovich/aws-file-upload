@@ -1,5 +1,6 @@
 import React from "react";
 import { FlashContext } from "./contexts/flash";
+import { Column, Row } from "./shared/Grid";
 
 const style: React.CSSProperties = {
   height: '200px',
@@ -7,11 +8,17 @@ const style: React.CSSProperties = {
 };
 
 export const Flash: React.FC = () => {
-  const { message } = React.useContext(FlashContext);
+  const { messages } = React.useContext(FlashContext);
 
   return (
-    <div id="flash" style={style}>
-      {message}
-    </div>
+    <Row>
+      <Column>
+        <div style={style}>
+          {messages.map((message) => (
+            <div key={message}>{message}</div>
+          ))}
+        </div>
+      </Column>
+    </Row>
   );
 }

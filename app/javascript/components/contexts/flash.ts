@@ -1,15 +1,21 @@
 import React from "react";
 
 export const useFlash = () => {
-  const [message, setMessage] = React.useState<string>();
+  const [messages, setMessages] = React.useState<Array<string>>([]);
+
+  const addMessage = React.useCallback((message: string) => {
+    setMessages((oldMessages) => [...oldMessages, message]);
+  }, [messages]);
+
+  const clear = React.useCallback(() => {
+    setMessages([]);
+  }, []);
 
   return {
-    message,
-    setMessage,
+    messages,
+    addMessage,
+    clear,
   }
 };
 
-export const FlashContext = React.createContext({
-  message: '',
-  setMessage: (message: string) => {},
-} as ReturnType<typeof useFlash>);
+export const FlashContext = React.createContext({} as ReturnType<typeof useFlash>);
