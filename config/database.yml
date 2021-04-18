@@ -1,6 +1,17 @@
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: aws_file_upload
+  host: db
   pool: 5
-  timeout: 5000
-  
+  username: postgres
+  password: password
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: aws_file_upload
+  host: db
+  pool: 5
+  username: postgres
+  password: password
