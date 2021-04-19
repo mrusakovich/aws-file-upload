@@ -2,7 +2,10 @@ import { Upload } from "../models/upload";
 import { Error as ErrorMessage } from "../models/error";
 
 const apiUrl = "/api/v1/uploads";
-const csrfToken = sessionStorage.getItem('csrf-token');
+
+function csrfToken() {
+  return sessionStorage.getItem('csrf-token');
+}
 
 type CreateProps = {
   file: File;
@@ -12,7 +15,7 @@ type CreateProps = {
 
 export async function create({ file, onSuccess, onError }: CreateProps): Promise<void> {
   const data = new FormData();
-      data.append('authenticity_token', csrfToken);
+      data.append('authenticity_token', csrfToken());
       data.append('file', file);
 
       const response = await fetch(apiUrl, {
@@ -45,7 +48,7 @@ export async function clear(): Promise<number> {
   const response = await fetch(`${apiUrl}/clear`, {
     method: 'DELETE',
     headers: {
-      'x-csrf-token': csrfToken,
+      'x-csrf-token': csrfToken(),
     }
   });
 
